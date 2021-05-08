@@ -1,14 +1,26 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
+import { Flex } from "rebass"
+
+import { Card } from "../Card"
+import { Placeholder } from "../Placeholder"
 
 import { DeckModel } from "./Deck.model"
-
 interface DeckProps {
-  Deck: DeckModel
+  deck: DeckModel
 }
 
-export const Deck: FC<DeckProps> = observer((props) => {
-  console.log(props)
+export const Deck: FC<DeckProps> = observer(({ deck }) => {
+  const cardUnturned = deck.pile.lastCard
+  const cardTurned = deck.pileTurned.lastCard
 
-  return <div>Deck</div>
+  return (
+    <Flex>
+      <Placeholder onClick={deck.turnCard}>
+        {cardUnturned && <Card card={cardUnturned} />}
+      </Placeholder>
+
+      {cardTurned && <Card card={cardTurned} />}
+    </Flex>
+  )
 })

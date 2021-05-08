@@ -34,10 +34,16 @@ export class DeckModel {
     }
   }
 
-  turnCard() {
+  turnCard = () => {
     const card = this.pile.pop()
+
     if (card) {
+      card.isTurned = true
       this.pileTurned.add(card)
+      return
     }
+
+    this.pile.cards.replace(this.pileTurned.cards)
+    this.pileTurned.clear()
   }
 }

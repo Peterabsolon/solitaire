@@ -25,9 +25,7 @@ export const Pile: FC<PileProps> = observer(({ pile, onCardClick }) => {
             }
           }
 
-          return (
-            <Card key={card.key} card={card} isTurned={card.isTurned} onClick={handleCardClick} />
-          )
+          return <Card key={card.key} card={card} onClick={handleCardClick} />
         })}
       </Cards>
     </Wrapper>

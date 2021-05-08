@@ -4,11 +4,20 @@ import { Flex } from "rebass"
 
 import { useStore } from "./App.store"
 import { Card } from "./Card"
+import { Deck } from "./Deck"
 import { Foundation } from "./Foundation"
 import { Pile } from "./Pile"
 
 const App = observer(() => {
-  const { foundations, piles, initialize, selectedCardsPile, handlePileCardClick } = useStore()
+  const {
+    deck,
+    foundations,
+    handlePileCardClick,
+    hasWon,
+    initialize,
+    piles,
+    selectedCardsPile,
+  } = useStore()
 
   useEffect(initialize, [initialize])
 
@@ -16,8 +25,12 @@ const App = observer(() => {
     <div>
       <h1>Solitaire</h1>
 
+      {hasWon && <h1 color="green">Victory!</h1>}
+
       <Flex justifyContent="space-between">
-        <div>Deck</div>
+        <div>
+          <Deck deck={deck} />
+        </div>
 
         <Flex>
           {foundations.map((foundation, index) => (
@@ -27,8 +40,8 @@ const App = observer(() => {
       </Flex>
 
       <Flex>
-        {piles.map((pile) => (
-          <Pile pile={pile} onCardClick={handlePileCardClick} />
+        {piles.map((pile, index) => (
+          <Pile key={index} pile={pile} onCardClick={handlePileCardClick} />
         ))}
       </Flex>
 
