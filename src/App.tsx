@@ -8,7 +8,7 @@ import { Card } from "./Card"
 import { Pile } from "./Pile"
 
 const App = observer(() => {
-  const { foundations, piles, initialize, selectedCard, selectCard } = useStore()
+  const { foundations, piles, initialize, selectedCardsPile, selectCard } = useStore()
 
   useEffect(initialize, [initialize])
 
@@ -30,7 +30,11 @@ const App = observer(() => {
         ))}
       </Flex>
 
-      <div>{selectedCard && <Card card={selectedCard} />}</div>
+      <div>
+        {selectedCardsPile.cards.map((card) => (
+          <Card card={card} />
+        ))}
+      </div>
     </div>
   )
 })

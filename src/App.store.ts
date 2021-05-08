@@ -19,8 +19,8 @@ class AppStore {
   // Standard 7 piles at the bottom
   piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel()))
 
-  // Card the user is currently dragging
-  selectedCard?: CardModel
+  // Cards the user is currently dragging
+  selectedCardsPile = new PileModel()
   selectedCardSourcePile?: PileModel
 
   constructor() {
@@ -30,41 +30,33 @@ class AppStore {
   // ====================================================
   // Actions
   // ====================================================
-  clearSelectedCard = () => {
-    this.selectedCard = undefined
+  clearSelection = () => {
+    this.selectedCardsPile.clear()
     this.selectedCardSourcePile = undefined
   }
 
   // TODO: add test
-  selectCard = (card: CardModel, pile: PileModel) => {
-    if (this.selectedCard && this.selectedCardSourcePile) {
-      const canAdd = pile.canAdd(this.selectedCard)
+  selectCard = (cards: CardModel[], pile: PileModel) => {
+    if (this.selectedCardsPile.firstCard && this.selectedCardSourcePile) {
+      const canAdd = pile.canAdd(this.selectedCardsPile.firstCard)
 
       if (canAdd) {
         // Add card to pile if we can
-        pile.add(this.selectedCard)
+        this.selectedCardsPile.cards.forEach((card) => pile.add(card))
         this.selectedCardSourcePile.turnLastCard()
       } else {
         // Else restore
-        this.selectedCardSourcePile.add(this.selectedCard)
+        this.selectedCardsPile.cards.forEach((card) => this.selectedCardSourcePile?.add(card))
       }
 
-      this.clearSelectedCard()
+      this.clearSelection()
       return
     }
 
-    this.selectedCard = card
+    this.selectedCardsPile.cards.replace(cards)
     this.selectedCardSourcePile = pile
 
-    pile.remove(card)
-  }
-
-  deselectCard = () => {
-    if (!this.selectedCardSourcePile || !this.selectedCard) {
-      return // shouldn't happen, just to keep TS happy
-    }
-
-    this.selectedCardSourcePile.add(this.selectedCard)
+    cards.forEach((card) => pile.remove(card))
   }
 
   initialize = () => {

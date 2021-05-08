@@ -15,10 +15,18 @@ export class PileModel {
   // ====================================================
   // Computed
   // ====================================================
+  get hasCards() {
+    return this.cards.length > 0
+  }
+
+  // Array length needs to be accessed in order for MobX to track it and hence update this view when it changes.
+  // This seems like a weird quirk, but not really once you're familiar with how MobX reactivity engine works.
   get lastCard(): CardModel | undefined {
-    // Array length needs to be accessed in order for MobX to track it and hence update this view when it changes.
-    // This seems like a weird quirk, but not really once you're familiar with how MobX reactivity engine works.
-    return this.cards.length ? this.cards[this.cards.length - 1] : undefined
+    return this.hasCards ? this.cards[this.cards.length - 1] : undefined
+  }
+
+  get firstCard(): CardModel | undefined {
+    return this.hasCards ? this.cards[0] : undefined
   }
 
   // ====================================================
@@ -34,6 +42,10 @@ export class PileModel {
 
   remove = (card: CardModel): void => {
     this.cards.remove(card)
+  }
+
+  clear = () => {
+    this.cards.clear()
   }
 
   // http://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm

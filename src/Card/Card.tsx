@@ -37,8 +37,8 @@ export const Wrapper = styled.div<WrapperProps>`
   width: ${CARD_WIDTH}px;
   height: 200px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  // align-items: center;
+  // justify-content: center;
   margin-bottom: 24px;
   margin-right: 24px;
   background: #fff;

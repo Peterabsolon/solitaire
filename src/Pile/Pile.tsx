@@ -10,7 +10,7 @@ import { PileModel } from "./Pile.model"
 
 interface PileProps {
   pile: PileModel
-  onCardClick?: (card: CardModel, pile: PileModel) => void
+  onCardClick?: (cards: CardModel[], pile: PileModel) => void
 }
 
 export const Pile: FC<PileProps> = observer(({ pile, onCardClick }) => {
@@ -18,11 +18,10 @@ export const Pile: FC<PileProps> = observer(({ pile, onCardClick }) => {
     <Wrapper>
       <Cards>
         {pile.cards.map((card, index) => {
-          const isLast = index === pile.cards.length - 1
-
           const handleCardClick = () => {
-            if (isLast && onCardClick && card.isTurned) {
-              onCardClick(card, pile)
+            if (onCardClick && card.isTurned) {
+              const cards = [...pile.cards].slice(index, pile.cards.length)
+              onCardClick(cards, pile)
             }
           }
 
@@ -47,7 +46,7 @@ const Cards = styled.div`
       (index) => css`
         &:nth-child(${index + 2}) {
           position: absolute;
-          top: ${(index + 1) * 10}px;
+          top: ${(index + 1) * 20}px;
         }
       `
     )}
