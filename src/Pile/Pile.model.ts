@@ -1,4 +1,4 @@
-import { IObservableArray, makeAutoObservable, observable } from "mobx"
+import { action, computed, IObservableArray, observable } from "mobx"
 
 import { CardModel, Rank } from "../Card"
 
@@ -8,48 +8,44 @@ export class PileModel {
   // ====================================================
   cards: IObservableArray<CardModel> = observable([])
 
-  constructor() {
-    makeAutoObservable(this)
-  }
-
   // ====================================================
   // Computed
   // ====================================================
-  get hasCards() {
+  @computed get hasCards() {
     return this.cards.length > 0
   }
 
   // Array length needs to be accessed in order for MobX to track it and hence update this view when it changes.
   // This seems like a weird quirk, but not really once you're familiar with how MobX reactivity engine works.
-  get lastCard(): CardModel | undefined {
+  @computed get lastCard(): CardModel | undefined {
     return this.hasCards ? this.cards[this.cards.length - 1] : undefined
   }
 
-  get firstCard(): CardModel | undefined {
+  @computed get firstCard(): CardModel | undefined {
     return this.hasCards ? this.cards[0] : undefined
   }
 
   // ====================================================
   // Actions
   // ====================================================
-  add = (card: CardModel): void => {
+  @action add = (card: CardModel): void => {
     this.cards.push(card)
   }
 
-  pop = (): CardModel | undefined => {
+  @action pop = (): CardModel | undefined => {
     return this.cards.pop()
   }
 
-  remove = (card: CardModel): void => {
+  @action remove = (card: CardModel): void => {
     this.cards.remove(card)
   }
 
-  clear = () => {
+  @action clear = () => {
     this.cards.clear()
   }
 
   // http://en.wikipedia.org/wiki/Fisher-Yates_shuffle#The_modern_algorithm
-  shuffle = () => {
+  @action shuffle = () => {
     for (let i = this.cards.length - 1; i > 0; i--) {
       let j = Math.floor(Math.random() * (i + 1))
 
@@ -59,7 +55,7 @@ export class PileModel {
     }
   }
 
-  canAdd = (card: CardModel) => {
+  @action canAdd = (card: CardModel) => {
     if (!this.lastCard) {
       return true
     }
@@ -73,7 +69,7 @@ export class PileModel {
     return isColorDifferent && isRankAbove
   }
 
-  turnLastCard = () => {
+  @action turnLastCard = () => {
     this.lastCard?.turn()
   }
 }

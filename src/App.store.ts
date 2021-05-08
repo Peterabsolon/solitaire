@@ -2,9 +2,10 @@ import { createContext, useContext } from "react"
 import { IObservableArray, makeAutoObservable, observable } from "mobx"
 import { times } from "lodash"
 
-import { DeckModel } from "./Deck"
-import { PileModel } from "./Pile"
 import { CardModel } from "./Card"
+import { DeckModel } from "./Deck"
+import { FoundationModel } from "./Foundation"
+import { PileModel } from "./Pile"
 
 class AppStore {
   // ====================================================
@@ -14,17 +15,24 @@ class AppStore {
   deck = new DeckModel()
 
   // Foundations are the 4 piles on the top-right
-  foundations: IObservableArray<PileModel> = observable(times(4).map(() => new PileModel()))
+  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel())) // prettier-ignore
 
   // Standard 7 piles at the bottom
   piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel()))
 
-  // Cards the user is currently dragging
+  // Pile of cards the user is currently dragging
   selectedCardsPile = new PileModel()
   selectedCardSourcePile?: PileModel
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  // ====================================================
+  // Computed
+  // ====================================================
+  get hasWon() {
+    return this.foundations.every((foundation) => foundation.isDone)
   }
 
   // ====================================================
@@ -35,18 +43,19 @@ class AppStore {
     this.selectedCardSourcePile = undefined
   }
 
-  // TODO: add test
-  selectCard = (cards: CardModel[], pile: PileModel) => {
-    if (this.selectedCardsPile.firstCard && this.selectedCardSourcePile) {
-      const canAdd = pile.canAdd(this.selectedCardsPile.firstCard)
+  restoreSelection = () => {
+    this.selectedCardsPile.cards.forEach((card) => this.selectedCardSourcePile?.add(card))
+  }
 
-      if (canAdd) {
+  // TODO: add test
+  handlePileCardClick = (cards: CardModel[], pile: PileModel) => {
+    if (this.selectedCardsPile.firstCard && this.selectedCardSourcePile) {
+      if (pile.canAdd(this.selectedCardsPile.firstCard)) {
         // Add card to pile if we can
         this.selectedCardsPile.cards.forEach((card) => pile.add(card))
         this.selectedCardSourcePile.turnLastCard()
       } else {
-        // Else restore
-        this.selectedCardsPile.cards.forEach((card) => this.selectedCardSourcePile?.add(card))
+        this.restoreSelection()
       }
 
       this.clearSelection()
@@ -57,6 +66,24 @@ class AppStore {
     this.selectedCardSourcePile = pile
 
     cards.forEach((card) => pile.remove(card))
+  }
+
+  handleFoundationClick = (foundation: FoundationModel) => {
+    const card = this.selectedCardsPile.firstCard
+
+    // only one can be added at a time
+    if (!card || this.selectedCardsPile.cards.length > 1) {
+      return
+    }
+
+    if (foundation.canAdd(card)) {
+      foundation.add(card)
+      this.selectedCardSourcePile?.turnLastCard()
+    } else {
+      this.restoreSelection()
+    }
+
+    this.clearSelection()
   }
 
   initialize = () => {

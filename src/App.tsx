@@ -4,29 +4,31 @@ import { Flex } from "rebass"
 
 import { useStore } from "./App.store"
 import { Card } from "./Card"
-
+import { Foundation } from "./Foundation"
 import { Pile } from "./Pile"
 
 const App = observer(() => {
-  const { foundations, piles, initialize, selectedCardsPile, selectCard } = useStore()
+  const { foundations, piles, initialize, selectedCardsPile, handlePileCardClick } = useStore()
 
   useEffect(initialize, [initialize])
 
   return (
     <div>
+      <h1>Solitaire</h1>
+
       <Flex justifyContent="space-between">
         <div>Deck</div>
 
         <Flex>
-          {foundations.map((foundation) => (
-            <Pile pile={foundation} />
+          {foundations.map((foundation, index) => (
+            <Foundation key={index} foundation={foundation} />
           ))}
         </Flex>
       </Flex>
 
       <Flex>
-        {piles.map((pile, index) => (
-          <Pile pile={pile} onCardClick={selectCard} />
+        {piles.map((pile) => (
+          <Pile pile={pile} onCardClick={handlePileCardClick} />
         ))}
       </Flex>
 
