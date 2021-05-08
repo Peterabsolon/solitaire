@@ -36,14 +36,16 @@ class AppStore {
   }
 
   // TODO: add test
-  selectCard = (card: CardModel, sourcePile: PileModel) => {
+  selectCard = (card: CardModel, pile: PileModel) => {
     if (this.selectedCard && this.selectedCardSourcePile) {
-      const canAdd = sourcePile.canAdd(this.selectedCard)
+      const canAdd = pile.canAdd(this.selectedCard)
 
       if (canAdd) {
-        sourcePile.add(this.selectedCard)
+        // Add card to pile if we can
+        pile.add(this.selectedCard)
         this.selectedCardSourcePile.turnLastCard()
       } else {
+        // Else restore
         this.selectedCardSourcePile.add(this.selectedCard)
       }
 
@@ -52,9 +54,9 @@ class AppStore {
     }
 
     this.selectedCard = card
-    this.selectedCardSourcePile = sourcePile
+    this.selectedCardSourcePile = pile
 
-    sourcePile.remove(card)
+    pile.remove(card)
   }
 
   deselectCard = () => {

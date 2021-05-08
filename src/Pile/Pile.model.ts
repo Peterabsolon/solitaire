@@ -1,6 +1,6 @@
 import { IObservableArray, makeAutoObservable, observable } from "mobx"
 
-import { CardModel } from "../Card"
+import { CardModel, Rank } from "../Card"
 
 export class PileModel {
   // ====================================================
@@ -48,12 +48,17 @@ export class PileModel {
   }
 
   canAdd = (card: CardModel) => {
-    const isColorDifferent = card.isBlack !== this.lastCard?.isBlack
-    const result = isColorDifferent
+    if (!this.lastCard) {
+      return true
+    }
 
-    console.log("result", result)
+    const cardRank = Object.values(Rank).indexOf(card.rank)
+    const cardLastRank = Object.values(Rank).indexOf(this.lastCard.rank)
 
-    return result
+    const isColorDifferent = card.isBlack !== this.lastCard.isBlack
+    const isRankAbove = cardRank + 1 === cardLastRank
+
+    return isColorDifferent && isRankAbove
   }
 
   turnLastCard = () => {
