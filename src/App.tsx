@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { IObservableArray, makeAutoObservable, observable } from "mobx"
+import "./App.css"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import { CardModel, CardModelProps, Rank, Suit } from "./Card"
+
+class Deck {
+  cards: IObservableArray<CardModel> = observable([])
+
+  constructor(cards: CardModelProps[]) {
+    makeAutoObservable(this)
+
+    this.cards.replace(cards.map((card) => new CardModel(card)))
+  }
 }
 
-export default App;
+const deck = new Deck([
+  { rank: Rank.King, suit: Suit.Clubs },
+  { rank: Rank.Queen, suit: Suit.Diamonds },
+])
+
+console.log("deck", deck)
+
+function App() {
+  return <div>App</div>
+}
+
+export default App
