@@ -1,27 +1,35 @@
-import { IObservableArray, makeAutoObservable, observable } from "mobx"
-import "./App.css"
+import { observer } from "mobx-react-lite"
+import { useEffect } from "react"
+import { Flex, Box } from "rebass"
 
-import { CardModel, CardModelProps, Rank, Suit } from "./Card"
+import { useStore } from "./App.store"
 
-class Deck {
-  cards: IObservableArray<CardModel> = observable([])
+import { Pile } from "./Pile"
 
-  constructor(cards: CardModelProps[]) {
-    makeAutoObservable(this)
+const App = observer(() => {
+  const { foundations, piles, init } = useStore()
 
-    this.cards.replace(cards.map((card) => new CardModel(card)))
-  }
-}
+  useEffect(init, [])
 
-const deck = new Deck([
-  { rank: Rank.King, suit: Suit.Clubs },
-  { rank: Rank.Queen, suit: Suit.Diamonds },
-])
+  return (
+    <div>
+      <Flex justifyContent="space-between">
+        <div>Deck</div>
 
-console.log("deck", deck)
+        <Flex>
+          {foundations.map((foundation) => (
+            <Pile pile={foundation} foundation />
+          ))}
+        </Flex>
+      </Flex>
 
-function App() {
-  return <div>App</div>
-}
+      <Flex>
+        {piles.map((pile, index) => (
+          <Pile pile={pile} index={index} />
+        ))}
+      </Flex>
+    </div>
+  )
+})
 
 export default App

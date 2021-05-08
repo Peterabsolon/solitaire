@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx"
 
-import { Rank, RankLabel, Suit } from "./Card.constants"
+import { Rank, Suit } from "./Card.constants"
 
 export interface CardModelProps {
   rank: Rank
@@ -24,9 +24,5 @@ export class CardModel {
 
   get isWhite() {
     return !this.isBlack
-  }
-
-  get label() {
-    return RankLabel[this.rank]
   }
 }

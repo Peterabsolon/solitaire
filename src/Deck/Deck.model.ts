@@ -1,12 +1,36 @@
 import { IObservableArray, makeAutoObservable, observable } from "mobx"
-import { CardModel, CardModelProps } from "../Card"
+
+import { CardModel, Rank, Suit } from "../Card"
+import { PileModel } from "../Pile"
 
 export class DeckModel {
-  cards: IObservableArray<CardModel> = observable([])
+  pile = new PileModel()
+  pileTurned = new PileModel()
 
-  constructor(cards: CardModelProps[]) {
+  constructor() {
     makeAutoObservable(this)
 
-    this.cards.replace(cards.map((card) => new CardModel(card)))
+    this.createCards()
+    this.pile.shuffle()
+  }
+
+  createCards() {
+    for (const rank of Object.values(Rank)) {
+      for (const suit of Object.values(Suit)) {
+        const card = new CardModel({
+          rank: rank as Rank,
+          suit: suit as Suit,
+        })
+
+        this.pile.add(card)
+      }
+    }
+  }
+
+  turnCard() {
+    const card = this.pile.pop()
+    if (card) {
+      this.pileTurned.add(card)
+    }
   }
 }
