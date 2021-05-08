@@ -1,36 +1,44 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import styled, { css } from "styled-components"
+import { times } from "lodash"
 
-import { Card, Wrapper as CardWrapper } from "../Card"
+import { Card, CardModel, Wrapper as CardWrapper } from "../Card"
+import { CARD_WIDTH } from "../constants"
 
 import { PileModel } from "./Pile.model"
-import { times } from "lodash"
 
 interface PileProps {
   pile: PileModel
-  index?: number
-  foundation?: boolean
+  onCardClick?: (card: CardModel, pile: PileModel) => void
 }
 
-export const Pile: FC<PileProps> = observer(({ pile, foundation, index }) => {
+export const Pile: FC<PileProps> = observer(({ pile, onCardClick }) => {
   return (
     <Wrapper>
-      {!foundation && (
-        <Cards>
-          {pile.cards.map((card, index) => {
-            const isLast = index === pile.cards.length - 1
+      <Cards>
+        {pile.cards.map((card, index) => {
+          const isLast = index === pile.cards.length - 1
 
-            return <Card card={card} isTurned={isLast} />
-          })}
-        </Cards>
-      )}
+          const handleCardClick = () => {
+            if (isLast && onCardClick && card.isTurned) {
+              onCardClick(card, pile)
+            }
+          }
+
+          return (
+            <Card key={card.key} card={card} isTurned={card.isTurned} onClick={handleCardClick} />
+          )
+        })}
+      </Cards>
     </Wrapper>
   )
 })
 
 const Wrapper = styled.div`
   position: relative;
+  width: ${CARD_WIDTH}px;
+  margin-right: 24px;
 `
 
 const Cards = styled.div`

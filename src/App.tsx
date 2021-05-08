@@ -1,15 +1,16 @@
 import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
-import { Flex, Box } from "rebass"
+import { Flex } from "rebass"
 
 import { useStore } from "./App.store"
+import { Card } from "./Card"
 
 import { Pile } from "./Pile"
 
 const App = observer(() => {
-  const { foundations, piles, init } = useStore()
+  const { foundations, piles, initialize, selectedCard, selectCard } = useStore()
 
-  useEffect(init, [])
+  useEffect(initialize, [initialize])
 
   return (
     <div>
@@ -18,16 +19,18 @@ const App = observer(() => {
 
         <Flex>
           {foundations.map((foundation) => (
-            <Pile pile={foundation} foundation />
+            <Pile pile={foundation} />
           ))}
         </Flex>
       </Flex>
 
       <Flex>
         {piles.map((pile, index) => (
-          <Pile pile={pile} index={index} />
+          <Pile pile={pile} onCardClick={selectCard} />
         ))}
       </Flex>
+
+      <div>{selectedCard && <Card card={selectedCard} />}</div>
     </div>
   )
 })

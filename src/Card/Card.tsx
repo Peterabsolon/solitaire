@@ -1,17 +1,21 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import styled, { css } from "styled-components"
+import { noop } from "lodash"
+
+import { CARD_WIDTH } from "../constants"
 
 import { CardModel } from "./Card.model"
 
 interface CardProps {
   card: CardModel
   isTurned?: boolean
+  onClick?: (card: CardModel) => void
 }
 
-export const Card: FC<CardProps> = observer(({ card, isTurned = true }) => {
+export const Card: FC<CardProps> = observer(({ card, onClick = noop, isTurned = true }) => {
   return (
-    <Wrapper isTurned={isTurned} isBlack={card.isBlack}>
+    <Wrapper isTurned={isTurned} isBlack={card.isBlack} onClick={() => onClick(card)}>
       {isTurned && (
         <>
           {card.rank}
@@ -30,7 +34,7 @@ interface WrapperProps {
 export const Wrapper = styled.div<WrapperProps>`
   border: 2px solid red;
   border-radius: 4px;
-  width: 100px;
+  width: ${CARD_WIDTH}px;
   height: 200px;
   display: flex;
   align-items: center;

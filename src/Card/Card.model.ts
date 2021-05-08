@@ -5,17 +5,30 @@ import { Rank, Suit } from "./Card.constants"
 export interface CardModelProps {
   rank: Rank
   suit: Suit
+  isTurned?: boolean
 }
 
 export class CardModel {
+  // ====================================================
+  // Model
+  // ====================================================
   rank: Rank
   suit: Suit
+  isTurned: boolean
 
-  constructor({ rank, suit }: CardModelProps) {
+  constructor({ rank, suit, isTurned = true }: CardModelProps) {
     makeAutoObservable(this)
 
     this.rank = rank
     this.suit = suit
+    this.isTurned = isTurned
+  }
+
+  // ====================================================
+  // Computed
+  // ====================================================
+  get key() {
+    return `${this.rank}-${this.suit}`
   }
 
   get isBlack() {
@@ -24,5 +37,12 @@ export class CardModel {
 
   get isWhite() {
     return !this.isBlack
+  }
+
+  // ====================================================
+  // Actions
+  // ====================================================
+  turn = () => {
+    this.isTurned = !this.isTurned
   }
 }
