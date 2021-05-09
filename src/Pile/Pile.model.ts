@@ -1,6 +1,6 @@
 import { action, computed, IObservableArray, observable } from "mobx"
 
-import { CardModel, Rank } from "../Card"
+import { CardModel, RANK_VALUES } from "../Card"
 
 interface PileModelProps {
   isDeckPile?: boolean
@@ -69,8 +69,8 @@ export class PileModel {
       return true
     }
 
-    const cardRank = Object.values(Rank).indexOf(card.rank)
-    const cardLastRank = Object.values(Rank).indexOf(this.lastCard.rank)
+    const cardRank = RANK_VALUES.indexOf(card.rank)
+    const cardLastRank = RANK_VALUES.indexOf(this.lastCard.rank)
 
     const isColorDifferent = card.isBlack !== this.lastCard.isBlack
     const isRankAbove = cardRank + 1 === cardLastRank

@@ -1,9 +1,7 @@
 import { FC } from "react"
 import { observer } from "mobx-react-lite"
-import styled from "styled-components"
 
 import { useStore } from "../App.store"
-import { CARD_HEIGHT, CARD_WIDTH } from "../constants"
 import { Card } from "../Card"
 import { Placeholder } from "../Placeholder"
 

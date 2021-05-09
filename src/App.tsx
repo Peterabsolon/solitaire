@@ -1,9 +1,8 @@
 import { observer } from "mobx-react-lite"
 import { useEffect } from "react"
-import { Flex } from "rebass"
+import { Box, Flex } from "rebass"
 
 import { useStore } from "./App.store"
-import { Card } from "./Card"
 import { Deck } from "./Deck"
 import { Foundation } from "./Foundation"
 import { Pile } from "./Pile"
@@ -45,11 +44,9 @@ const App = observer(() => {
         ))}
       </Flex>
 
-      <div>
-        {selectedCardsPile.cards.map((card) => (
-          <Card key={card.key} card={card} />
-        ))}
-      </div>
+      <Box mt={120}>
+        <Pile pile={selectedCardsPile} />
+      </Box>
     </div>
   )
 })

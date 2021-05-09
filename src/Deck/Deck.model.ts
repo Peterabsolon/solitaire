@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx"
 
-import { CardModel, Rank, Suit } from "../Card"
+import { CardModel, RANK, SUIT } from "../Card"
 import { PileModel } from "../Pile"
 
 export class DeckModel {
@@ -21,11 +21,11 @@ export class DeckModel {
   // Actions
   // ====================================================
   createCards() {
-    for (const rank of Object.values(Rank)) {
-      for (const suit of Object.values(Suit)) {
+    for (const rank of Object.values(RANK)) {
+      for (const suit of Object.values(SUIT)) {
         const card = new CardModel({
-          rank: rank as Rank,
-          suit: suit as Suit,
+          rank: rank as RANK,
+          suit: suit as SUIT,
           isTurned: false,
         })
 
@@ -36,13 +36,16 @@ export class DeckModel {
 
   turnCard = () => {
     const card = this.pile.pop()
-
     if (card) {
       card.isTurned = true
       this.pileTurned.add(card)
       return
     }
 
+    this.resetPile()
+  }
+
+  resetPile = () => {
     this.pile.cards.replace(this.pileTurned.cards)
     this.pileTurned.clear()
     this.pile.cards.forEach((card) => card.turn())

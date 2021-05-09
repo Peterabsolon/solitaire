@@ -1,10 +1,10 @@
 import { makeAutoObservable } from "mobx"
 
-import { Rank, Suit } from "./Card.constants"
+import { RANK, SUIT } from "./Card.constants"
 
 export interface CardModelProps {
-  rank: Rank
-  suit: Suit
+  rank: RANK
+  suit: SUIT
   isTurned?: boolean
 }
 
@@ -12,8 +12,8 @@ export class CardModel {
   // ====================================================
   // Model
   // ====================================================
-  rank: Rank
-  suit: Suit
+  rank: RANK
+  suit: SUIT
   isTurned: boolean
 
   constructor({ rank, suit, isTurned = true }: CardModelProps) {
@@ -32,11 +32,7 @@ export class CardModel {
   }
 
   get isBlack() {
-    return [Suit.Clubs, Suit.Spades].includes(this.suit)
-  }
-
-  get isWhite() {
-    return !this.isBlack
+    return [SUIT.CLUBS, SUIT.SPADES].includes(this.suit)
   }
 
   // ====================================================

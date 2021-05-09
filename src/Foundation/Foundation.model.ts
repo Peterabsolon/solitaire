@@ -1,23 +1,23 @@
 import { computed, override } from "mobx"
 
-import { CardModel, Rank } from "../Card"
+import { CardModel, RANK, RANK_VALUES } from "../Card"
 import { PileModel } from "../Pile"
 
 export class FoundationModel extends PileModel {
   @computed get isDone() {
-    return this.cards.length === 13
+    return this.cards.length === RANK_VALUES.length
   }
 
   @override canAdd = (card: CardModel) => {
     if (!this.lastCard) {
-      return card.rank === Rank.Ace
+      return card.rank === RANK.ACE
     }
 
-    const cardRank = Object.values(Rank).indexOf(card.rank)
-    const cardLastRank = Object.values(Rank).indexOf(this.lastCard.rank)
+    const cardRank = RANK_VALUES.indexOf(card.rank)
+    const cardLastRank = RANK_VALUES.indexOf(this.lastCard.rank)
 
     const isSameSuit = card.suit === this.lastCard.suit
-    const isRankAbove = cardRank - 1 === cardLastRank
+    const isRankAbove = cardRank === cardLastRank + 1
 
     return isSameSuit && isRankAbove
   }

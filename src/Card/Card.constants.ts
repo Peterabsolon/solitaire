@@ -1,22 +1,24 @@
-export enum Rank {
-  Ace = "A",
-  Two = "2",
-  Three = "3",
-  Four = "4",
-  Five = "5",
-  Six = "6",
-  Seven = "7",
-  Eight = "8",
-  Nine = "9",
-  Ten = "10",
-  Jack = "J",
-  Queen = "Q",
-  King = "K",
+export enum RANK {
+  ACE = "A",
+  TWO = "2",
+  THREE = "3",
+  FOUR = "4",
+  FIVE = "5",
+  SIX = "6",
+  SEVEN = "7",
+  EIGHT = "8",
+  NINE = "9",
+  TEN = "10",
+  JACK = "J",
+  QUEEN = "Q",
+  KING = "K",
 }
 
-export enum Suit {
-  Clubs = "♣",
-  Diamonds = "♦",
-  Hearts = "♥",
-  Spades = "♠",
+export const RANK_VALUES = Object.values(RANK)
+
+export enum SUIT {
+  CLUBS = "♣",
+  DIAMONDS = "♦",
+  HEARTS = "♥",
+  SPADES = "♠",
 }
