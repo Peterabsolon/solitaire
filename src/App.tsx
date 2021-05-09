@@ -47,7 +47,7 @@ const App = observer(() => {
 
       <div>
         {selectedCardsPile.cards.map((card) => (
-          <Card card={card} />
+          <Card key={card.key} card={card} />
         ))}
       </div>
     </div>

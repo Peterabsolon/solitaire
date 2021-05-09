@@ -82,7 +82,10 @@ class AppStore {
 
     if (foundation.canAdd(card)) {
       foundation.add(card)
-      this.selectedCardSourcePile?.turnLastCard()
+
+      if (!this.selectedCardSourcePile?.isDeckPile) {
+        this.selectedCardSourcePile?.turnLastCard()
+      }
     } else {
       this.restoreSelection()
     }

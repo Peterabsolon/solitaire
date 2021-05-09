@@ -32,3 +32,5 @@ export const Deck: FC<DeckProps> = observer(({ deck }) => {
     </Flex>
   )
 })
+
+Deck.displayName = "Deck"

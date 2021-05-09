@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { useStore } from "../App.store"
 import { CARD_HEIGHT, CARD_WIDTH } from "../constants"
 import { Card } from "../Card"
+import { Placeholder } from "../Placeholder"
 
 import { FoundationModel } from "./Foundation.model"
 
@@ -16,16 +17,10 @@ export const Foundation: FC<FoundationProps> = observer(({ foundation }) => {
   const store = useStore()
 
   return (
-    <Wrapper onClick={() => store.handleFoundationClick(foundation)}>
-      Foundation
+    <Placeholder onClick={() => store.handleFoundationClick(foundation)}>
       {foundation.lastCard && <Card card={foundation.lastCard} />}
-    </Wrapper>
+    </Placeholder>
   )
 })
 
-const Wrapper = styled.div`
-  width: ${CARD_WIDTH}px;
-  height: ${CARD_HEIGHT}px;
-  background: #e4e4e4;
-  margin-left: 24px;
-`
+Foundation.displayName = "Foundation"

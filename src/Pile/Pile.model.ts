@@ -79,6 +79,8 @@ export class PileModel {
   }
 
   @action turnLastCard = () => {
-    this.lastCard?.turn()
+    if (!this.lastCard?.isTurned) {
+      this.lastCard?.turn()
+    }
   }
 }

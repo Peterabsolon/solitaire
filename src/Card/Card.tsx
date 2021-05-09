@@ -25,6 +25,8 @@ export const Card: FC<CardProps> = observer(({ card, onClick = noop }) => {
   )
 })
 
+Card.displayName = "Card"
+
 interface WrapperProps {
   isTurned: boolean
   isBlack: boolean
