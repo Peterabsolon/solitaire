@@ -48,7 +48,7 @@ export const Wrapper = styled.div<WrapperProps>`
 
     ${!props.isTurned &&
     css`
-      background: rgba(255, 0, 0, 0.5);
+      background: #ff898c;
     `}
   `}
 `
