@@ -41,10 +41,6 @@ export class PileModel {
     this.cards.push(card)
   }
 
-  @action unshift = (card: CardModel): void => {
-    this.cards.unshift(card)
-  }
-
   @action pop = (): CardModel | undefined => {
     return this.cards.pop()
   }
