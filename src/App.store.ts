@@ -15,13 +15,13 @@ class AppStore {
   deck = new DeckModel()
 
   // Foundations are the 4 piles on the top-right
-  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel())) // prettier-ignore
+  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel({}))) // prettier-ignore
 
   // Standard 7 piles at the bottom
-  piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel()))
+  piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel({})))
 
   // Pile of cards the user is currently dragging
-  selectedCardsPile = new PileModel()
+  selectedCardsPile = new PileModel({})
   selectedCardSourcePile?: PileModel
 
   constructor() {
@@ -53,7 +53,11 @@ class AppStore {
       if (pile.canAdd(this.selectedCardsPile.firstCard)) {
         // Add card to pile if we can
         this.selectedCardsPile.cards.forEach((card) => pile.add(card))
-        this.selectedCardSourcePile.turnLastCard()
+
+        // Turn last card from source pile, if it's not in deck (where they are all turned already)
+        if (!this.selectedCardSourcePile.isDeckPile) {
+          this.selectedCardSourcePile.turnLastCard()
+        }
       } else {
         this.restoreSelection()
       }

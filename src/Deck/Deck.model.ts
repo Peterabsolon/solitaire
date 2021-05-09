@@ -7,8 +7,8 @@ export class DeckModel {
   // ====================================================
   // Model
   // ====================================================
-  pile = new PileModel()
-  pileTurned = new PileModel()
+  pile = new PileModel({})
+  pileTurned = new PileModel({ isDeckPile: true })
 
   constructor() {
     makeAutoObservable(this)
@@ -45,5 +45,6 @@ export class DeckModel {
 
     this.pile.cards.replace(this.pileTurned.cards)
     this.pileTurned.clear()
+    this.pile.cards.forEach((card) => card.turn())
   }
 }

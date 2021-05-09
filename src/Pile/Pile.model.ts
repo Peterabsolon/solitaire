@@ -2,11 +2,20 @@ import { action, computed, IObservableArray, observable } from "mobx"
 
 import { CardModel, Rank } from "../Card"
 
+interface PileModelProps {
+  isDeckPile?: boolean
+}
+
 export class PileModel {
   // ====================================================
   // Model
   // ====================================================
   cards: IObservableArray<CardModel> = observable([])
+  isDeckPile: boolean
+
+  constructor({ isDeckPile = false }: PileModelProps) {
+    this.isDeckPile = isDeckPile
+  }
 
   // ====================================================
   // Computed
@@ -30,6 +39,10 @@ export class PileModel {
   // ====================================================
   @action add = (card: CardModel): void => {
     this.cards.push(card)
+  }
+
+  @action unshift = (card: CardModel): void => {
+    this.cards.unshift(card)
   }
 
   @action pop = (): CardModel | undefined => {

@@ -2,6 +2,7 @@ import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { Flex } from "rebass"
 
+import { useStore } from "../App.store"
 import { Card } from "../Card"
 import { Placeholder } from "../Placeholder"
 
@@ -11,6 +12,8 @@ interface DeckProps {
 }
 
 export const Deck: FC<DeckProps> = observer(({ deck }) => {
+  const { handlePileCardClick } = useStore()
+
   const cardUnturned = deck.pile.lastCard
   const cardTurned = deck.pileTurned.lastCard
 
@@ -20,7 +23,12 @@ export const Deck: FC<DeckProps> = observer(({ deck }) => {
         {cardUnturned && <Card card={cardUnturned} />}
       </Placeholder>
 
-      {cardTurned && <Card card={cardTurned} />}
+      {cardTurned && (
+        <Card
+          card={cardTurned}
+          onClick={() => handlePileCardClick([cardTurned], deck.pileTurned)}
+        />
+      )}
     </Flex>
   )
 })
