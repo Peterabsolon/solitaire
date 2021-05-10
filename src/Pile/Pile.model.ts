@@ -1,4 +1,4 @@
-import { action, computed, IObservableArray, observable } from "mobx"
+import { action, computed, observable } from "mobx"
 
 import { CardModel } from "../Card"
 import { RANK, RANK_VALUES } from "../constants"
@@ -7,7 +7,7 @@ export class PileModel {
   // ====================================================
   // Model
   // ====================================================
-  cards: IObservableArray<CardModel> = observable([])
+  cards = observable<CardModel>([])
 
   // ====================================================
   // Computed

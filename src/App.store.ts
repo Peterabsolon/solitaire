@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react"
-import { IObservableArray, makeAutoObservable, observable } from "mobx"
+import { makeAutoObservable, observable } from "mobx"
 import { times } from "lodash"
 
 import { CardModel } from "./Card"
@@ -15,10 +15,10 @@ class AppStore {
   deck = new DeckModel()
 
   // Foundations are the 4 piles on the top-right
-  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel())) // prettier-ignore
+  foundations = observable<FoundationModel>(times(4).map(() => new FoundationModel()))
 
   // Standard 7 piles at the bottom
-  piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel()))
+  piles = observable<PileModel>(times(7).map(() => new PileModel()))
 
   constructor() {
     makeAutoObservable(this)
