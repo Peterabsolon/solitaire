@@ -1,6 +1,8 @@
 import { action, computed, IObservableArray, observable } from "mobx"
 
-import { CardModel, RANK_VALUES } from "../Card"
+import { CardModel } from "../Card"
+import { RANK_VALUES } from "../constants"
+
 export class PileModel {
   // ====================================================
   // Model
@@ -68,9 +70,7 @@ export class PileModel {
     return isColorDifferent && isRankBelow
   }
 
-  @action turnLastCard = () => {
-    if (!this.lastCard?.isTurned) {
-      this.lastCard?.turn()
-    }
+  @action revealLastCard = () => {
+    this.lastCard?.reveal()
   }
 }

@@ -1,7 +1,8 @@
 import { computed, override } from "mobx"
 
-import { CardModel, RANK, RANK_VALUES } from "../Card"
+import { CardModel } from "../Card"
 import { PileModel } from "../Pile"
+import { RANK, RANK_VALUES } from "../constants"
 
 export class FoundationModel extends PileModel {
   @computed get isDone() {

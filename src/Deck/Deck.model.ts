@@ -1,7 +1,8 @@
 import { makeAutoObservable } from "mobx"
 
-import { CardModel, RANK, SUIT } from "../Card"
+import { CardModel } from "../Card"
 import { PileModel } from "../Pile"
+import { RANK, SUIT } from "../constants"
 
 export class DeckModel {
   // ====================================================
@@ -48,6 +49,6 @@ export class DeckModel {
   resetPile = () => {
     this.pile.cards.replace(this.pileTurned.cards)
     this.pileTurned.clear()
-    this.pile.cards.forEach((card) => card.turn())
+    this.pile.cards.forEach((card) => card.reveal())
   }
 }

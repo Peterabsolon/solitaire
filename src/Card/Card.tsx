@@ -15,25 +15,23 @@ interface CardProps {
 }
 
 export const Card: FC<CardProps> = observer(
-  ({ card, onClick = noop, onDragStart = noop, index }) => {
-    return (
-      <Wrapper
-        draggable
-        data-index={index}
-        isTurned={card.isTurned}
-        isBlack={card.isBlack}
-        onClick={onClick}
-        onDragStart={onDragStart}
-      >
-        {card.isTurned && (
-          <>
-            {card.rank}
-            {card.suit}
-          </>
-        )}
-      </Wrapper>
-    )
-  }
+  ({ card, onClick = noop, onDragStart = noop, index }) => (
+    <Wrapper
+      draggable
+      data-index={index}
+      isTurned={card.isTurned}
+      isBlack={card.isBlack}
+      onClick={onClick}
+      onDragStart={onDragStart}
+    >
+      {card.isTurned && (
+        <>
+          {card.rank}
+          {card.suit}
+        </>
+      )}
+    </Wrapper>
+  )
 )
 
 Card.displayName = "Card"
@@ -49,8 +47,6 @@ export const Wrapper = styled.div<WrapperProps>`
   width: ${CARD_WIDTH}px;
   height: ${CARD_HEIGHT}px;
   display: flex;
-  // align-items: center;
-  // justify-content: center;
   margin-bottom: 24px;
   margin-right: 24px;
   background: #fff;

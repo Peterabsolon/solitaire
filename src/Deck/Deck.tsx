@@ -7,6 +7,7 @@ import { Card } from "../Card"
 import { Placeholder } from "../Placeholder"
 
 import { DeckModel } from "./Deck.model"
+
 interface DeckProps {
   deck: DeckModel
 }

@@ -72,7 +72,7 @@ class AppStore {
         sourcePile.remove(card)
       })
 
-      sourcePile.turnLastCard()
+      sourcePile.revealLastCard()
     }
   }
 
@@ -95,7 +95,7 @@ class AppStore {
     if (card && foundation && foundation.canAdd(card)) {
       foundation.add(card)
       pile.remove(card)
-      pile.turnLastCard()
+      pile.revealLastCard()
     }
   }
 
@@ -107,7 +107,7 @@ class AppStore {
 
         if (card) {
           if (isLast) {
-            card.turn()
+            card.reveal()
           }
 
           this.piles[pileIndex].add(card)
@@ -118,7 +118,7 @@ class AppStore {
 }
 
 const store = new AppStore()
-
 const storeContext = createContext(store)
+const useStore = () => useContext(storeContext)
 
-export const useStore = () => useContext(storeContext)
+export { useStore }
