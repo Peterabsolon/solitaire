@@ -2,7 +2,7 @@ import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import styled from "styled-components"
 
-import { CARD_HEIGHT, CARD_WIDTH } from "../constants"
+import { BORDER_RADIUS, CARD_HEIGHT, CARD_WIDTH } from "../constants"
 
 interface PlaceholderProps {
   onClick?: () => void
@@ -21,11 +21,11 @@ export const Placeholder: FC<PlaceholderProps> = observer(
 Placeholder.displayName = "Placeholder"
 
 const Wrapper = styled.div`
-  width: ${CARD_WIDTH}px;
-  height: ${CARD_HEIGHT}px;
+  width: ${CARD_WIDTH};
+  height: ${CARD_HEIGHT};
+  border-radius: ${BORDER_RADIUS};
   margin-right: 24px;
   margin-bottom: 24px;
-  background: #efefef;
+  background: #0d680d;
   position: relative;
-  border-radius: 4px;
 `

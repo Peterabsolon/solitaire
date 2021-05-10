@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite"
 import styled, { css } from "styled-components"
 import { noop } from "lodash"
 
-import { CARD_HEIGHT, CARD_WIDTH } from "../constants"
+import { BORDER_RADIUS, CARD_HEIGHT, CARD_WIDTH, RANK, SUIT } from "../constants"
 
 import { CardModel } from "./Card.model"
 
@@ -23,14 +23,9 @@ export const Card: FC<CardProps> = observer(
       isBlack={card.isBlack}
       onClick={onClick}
       onDragStart={onDragStart}
-    >
-      {card.isTurned && (
-        <>
-          {card.rank}
-          {card.suit}
-        </>
-      )}
-    </Wrapper>
+      rank={card.rank}
+      suit={card.suit}
+    />
   )
 )
 
@@ -39,13 +34,14 @@ Card.displayName = "Card"
 interface WrapperProps {
   isTurned: boolean
   isBlack: boolean
+  rank: RANK
+  suit: SUIT
 }
 
 export const Wrapper = styled.div<WrapperProps>`
-  border: 2px solid red;
-  border-radius: 4px;
-  width: ${CARD_WIDTH}px;
-  height: ${CARD_HEIGHT}px;
+  border-radius: ${BORDER_RADIUS};
+  width: ${CARD_WIDTH};
+  height: ${CARD_HEIGHT};
   display: flex;
   margin-bottom: 24px;
   margin-right: 24px;
@@ -55,9 +51,15 @@ export const Wrapper = styled.div<WrapperProps>`
   ${(props) => css`
     color: ${props.isBlack ? "#000" : "#f00"};
 
-    ${!props.isTurned &&
-    css`
-      background: #ff898c;
-    `}
+    ${props.isTurned
+      ? css`
+          background-image: url("cards/${props.rank}-${props.suit}.svg");
+          background-size: cover;
+          box-shadow: inset 0 0 0 0.15vw #1e0c7d;
+        `
+      : css`
+          background-image: url("cards/back.svg");
+          background-size: cover;
+        `}
   `}
 `

@@ -89,7 +89,7 @@ const Cards = styled.div`
       (index) => css`
         &:nth-child(${index + 2}) {
           position: absolute;
-          top: ${(index + 1) * 20}px;
+          top: ${(index + 1) * 1.5}vw;
         }
       `
     )}

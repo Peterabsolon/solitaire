@@ -17,11 +17,14 @@ export enum RANK {
 export const RANK_VALUES = Object.values(RANK)
 
 export enum SUIT {
-  CLUBS = "♣",
-  DIAMONDS = "♦",
-  HEARTS = "♥",
-  SPADES = "♠",
+  CLUBS = "C",
+  DIAMONDS = "D",
+  HEARTS = "H",
+  SPADES = "S",
 }
 
-export const CARD_WIDTH = 100
-export const CARD_HEIGHT = 200
+// These could be defined in a theme for styled-components, but for this demo this should be enough
+export const CARD_WIDTH_NUM = 7
+export const CARD_WIDTH = `${CARD_WIDTH_NUM}vw`
+export const CARD_HEIGHT = `${CARD_WIDTH_NUM * (3 / 2)}vw`
+export const BORDER_RADIUS = `${CARD_WIDTH_NUM / 10}vw`
