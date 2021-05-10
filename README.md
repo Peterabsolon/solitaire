@@ -1,7 +1,4 @@
 # Solitaire
 
-## TODO
-
-- Add card to empty deck
-- Drag n drop
+Live demo: https://solitaire-demo-vlxp5wixua-uc.a.run.app/
 
