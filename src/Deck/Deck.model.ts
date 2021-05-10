@@ -47,7 +47,7 @@ export class DeckModel {
   }
 
   resetPile = () => {
-    this.pile.cards.replace(this.pileTurned.cards)
+    this.pile.cards.replace(this.pileTurned.cards.reverse())
     this.pileTurned.clear()
     this.pile.cards.forEach((card) => card.hide())
   }
