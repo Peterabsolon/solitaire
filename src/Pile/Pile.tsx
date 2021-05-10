@@ -48,7 +48,7 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
   }
 
   return (
-    <Placeholder onDrop={handleDrop} onDragOver={handleDragOver}>
+    <StyledPlaceholder onDrop={handleDrop} onDragOver={handleDragOver}>
       <Cards>
         {pile.cards.map((card, index) => {
           const handleCardClick = () => {
@@ -69,9 +69,14 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
           )
         })}
       </Cards>
-    </Placeholder>
+    </StyledPlaceholder>
   )
 })
+
+const StyledPlaceholder = styled(Placeholder)`
+  background: none;
+  height: 30vw;
+`
 
 Pile.displayName = "Pile"
 

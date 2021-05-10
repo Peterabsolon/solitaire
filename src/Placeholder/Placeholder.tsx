@@ -5,14 +5,15 @@ import styled from "styled-components"
 import { BORDER_RADIUS, CARD_HEIGHT, CARD_WIDTH } from "../constants"
 
 interface PlaceholderProps {
+  className?: string
   onClick?: () => void
   onDrop?: (event: any) => void
   onDragOver?: (event: any) => void
 }
 
 export const Placeholder: FC<PlaceholderProps> = observer(
-  ({ children, onClick, onDrop, onDragOver }) => (
-    <Wrapper onClick={onClick} onDragOver={onDragOver} onDropCapture={onDrop}>
+  ({ children, className, onClick, onDrop, onDragOver }) => (
+    <Wrapper className={className} onClick={onClick} onDragOver={onDragOver} onDropCapture={onDrop}>
       {children}
     </Wrapper>
   )
