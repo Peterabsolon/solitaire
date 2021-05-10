@@ -73,14 +73,22 @@ export class PileModel {
     const cardLastRank = RANK_VALUES.indexOf(this.lastCard.rank)
 
     const isColorDifferent = card.isBlack !== this.lastCard.isBlack
-    const isRankAbove = cardRank + 1 === cardLastRank
+    const isRankBelow = cardRank === cardLastRank - 1
 
-    return isColorDifferent && isRankAbove
+    return isColorDifferent && isRankBelow
   }
 
   @action turnLastCard = () => {
     if (!this.lastCard?.isTurned) {
       this.lastCard?.turn()
     }
+  }
+
+  @action handleDrop = (event: any) => {
+    console.log("dropped to pile")
+  }
+
+  @action handleDragOver = (event: any) => {
+    event.preventDefault()
   }
 }

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, DragEvent } from "react"
 import { observer } from "mobx-react-lite"
 import styled, { css } from "styled-components"
 import { noop, times } from "lodash"
@@ -9,13 +9,54 @@ import { Placeholder } from "../Placeholder"
 import { PileModel } from "./Pile.model"
 
 interface PileProps {
-  pile: PileModel
+  index: number
   onCardClick?: (cards: CardModel[], pile: PileModel) => void
+  onCardDrop?: (
+    isFromDeck: boolean,
+    cardIndex: number,
+    pileIndexFrom: number,
+    pileIndexTo: number
+  ) => void
+  pile: PileModel
 }
 
-export const Pile: FC<PileProps> = observer(({ pile, onCardClick = noop }) => {
+export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCardDrop, pile }) => {
+  const handleWrapperClick = () => {
+    if (pile.cards.length) {
+      return
+    }
+
+    onCardClick([], pile)
+  }
+
+  const handleCardDrag = (event: DragEvent) => {
+    const target = event.target as HTMLDivElement
+
+    const cardIndex = target.getAttribute("data-index")
+    const pileIndex = index.toString()
+
+    event.dataTransfer.setData("cardIndex", cardIndex!)
+    event.dataTransfer.setData("pileIndex", pileIndex)
+  }
+
+  const handleDrop = (event: DragEvent) => {
+    if (!onCardDrop) {
+      return
+    }
+
+    const cardIndex = event.dataTransfer.getData("cardIndex")
+    const pileIndexFrom = event.dataTransfer.getData("pileIndex")
+    const isFromDeck = event.dataTransfer.getData("isFromDeck")
+
+    onCardDrop(Boolean(isFromDeck), Number(cardIndex), Number(pileIndexFrom), index)
+  }
+
+  const handleDragOver = (event: DragEvent) => {
+    event.preventDefault()
+  }
+
   return (
-    <Placeholder onClick={pile.cards.length ? undefined : () => onCardClick([], pile)}>
+    <Placeholder onClick={handleWrapperClick} onDrop={handleDrop} onDragOver={handleDragOver}>
       <Cards>
         {pile.cards.map((card, index) => {
           const handleCardClick = () => {
@@ -25,7 +66,15 @@ export const Pile: FC<PileProps> = observer(({ pile, onCardClick = noop }) => {
             }
           }
 
-          return <Card key={card.key} card={card} onClick={handleCardClick} />
+          return (
+            <Card
+              key={card.key}
+              index={index}
+              card={card}
+              onClick={handleCardClick}
+              onDragStart={handleCardDrag}
+            />
+          )
         })}
       </Cards>
     </Placeholder>

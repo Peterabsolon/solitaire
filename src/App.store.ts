@@ -20,10 +20,6 @@ class AppStore {
   // Standard 7 piles at the bottom
   piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel({})))
 
-  // Pile of cards the user is currently dragging
-  selectedCardsPile = new PileModel({})
-  selectedCardSourcePile?: PileModel
-
   constructor() {
     makeAutoObservable(this)
   }
@@ -38,59 +34,80 @@ class AppStore {
   // ====================================================
   // Actions
   // ====================================================
-  clearSelection = () => {
-    this.selectedCardsPile.clear()
-    this.selectedCardSourcePile = undefined
-  }
-
-  restoreSelection = () => {
-    this.selectedCardsPile.cards.forEach((card) => this.selectedCardSourcePile?.add(card))
-  }
-
   // TODO: add test
   handlePileCardClick = (cards: CardModel[], pile: PileModel) => {
-    if (this.selectedCardsPile.firstCard && this.selectedCardSourcePile) {
-      if (pile.canAdd(this.selectedCardsPile.firstCard)) {
-        // Add card to pile if we can
-        this.selectedCardsPile.cards.forEach((card) => pile.add(card))
-
-        // Turn last card from source pile, if it's not in deck (where they are all turned already)
-        if (!this.selectedCardSourcePile.isDeckPile) {
-          this.selectedCardSourcePile.turnLastCard()
-        }
-      } else {
-        this.restoreSelection()
-      }
-
-      this.clearSelection()
-      return
-    }
-
-    this.selectedCardsPile.cards.replace(cards)
-    this.selectedCardSourcePile = pile
-
-    cards.forEach((card) => pile.remove(card))
+    console.log("TODO: automatically add to correct pile/foundation")
+    return
   }
 
-  handleFoundationClick = (foundation: FoundationModel) => {
-    const card = this.selectedCardsPile.firstCard
+  handleDropToPileFromDeck = (pileIndexTo: number) => {
+    const card = this.deck.pileTurned.lastCard
+    const pile = this.piles[pileIndexTo]
 
-    // only one can be added at a time
-    if (!card || this.selectedCardsPile.cards.length > 1) {
+    if (card && pile && pile.canAdd(card)) {
+      pile.add(card)
+      this.deck.pileTurned.remove(card)
+    }
+  }
+
+  handleDropToPile = (
+    fromDeck: boolean,
+    cardIndex: number,
+    pileIndexFrom: number,
+    pileIndexTo: number
+  ) => {
+    if (fromDeck) {
+      this.handleDropToPileFromDeck(pileIndexTo)
       return
     }
 
-    if (foundation.canAdd(card)) {
-      foundation.add(card)
+    const pileSource = this.piles[pileIndexFrom]
+    const pileTarget = this.piles[pileIndexTo]
 
-      if (!this.selectedCardSourcePile?.isDeckPile) {
-        this.selectedCardSourcePile?.turnLastCard()
-      }
-    } else {
-      this.restoreSelection()
+    const sourceCards = pileSource.cards
+    const cards = sourceCards.slice(cardIndex, sourceCards.length)
+
+    if (cards.length && pileTarget && pileTarget.canAdd(cards[0])) {
+      cards.forEach((card) => {
+        pileTarget.add(card)
+        pileSource.remove(card)
+      })
+
+      pileSource.turnLastCard()
+    }
+  }
+
+  handleDropToFoundationFromDeck = (foundationIndex: number) => {
+    const card = this.deck.pileTurned.lastCard
+    const foundation = this.foundations[foundationIndex]
+
+    if (card && foundation && foundation.canAdd(card)) {
+      foundation.add(card)
+      this.deck.pileTurned.remove(card)
+    }
+  }
+
+  handleDropToFoundation = (
+    fromDeck: boolean,
+    cardIndex: number,
+    pileIndex: number,
+    foundationIndex: number
+  ) => {
+    if (fromDeck) {
+      this.handleDropToFoundationFromDeck(foundationIndex)
+      return
     }
 
-    this.clearSelection()
+    const pile = this.piles[pileIndex]
+    const foundation = this.foundations[foundationIndex]
+
+    const card = pile.cards[cardIndex]
+
+    if (card && foundation && foundation.canAdd(card)) {
+      foundation.add(card)
+      pile.remove(card)
+      pile.turnLastCard()
+    }
   }
 
   initialize = () => {

@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx"
+import { DragEvent } from "react"
 
 import { RANK, SUIT } from "./Card.constants"
 
@@ -40,5 +41,14 @@ export class CardModel {
   // ====================================================
   turn = () => {
     this.isTurned = !this.isTurned
+  }
+
+  handleDragStart = (event: DragEvent<any>) => {
+    // @ts-ignore
+    const data = event.target.id
+
+    console.log("data", data)
+
+    event.dataTransfer.setData("text", data)
   }
 }

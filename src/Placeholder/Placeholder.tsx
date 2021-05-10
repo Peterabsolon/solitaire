@@ -6,11 +6,17 @@ import { CARD_HEIGHT, CARD_WIDTH } from "../constants"
 
 interface PlaceholderProps {
   onClick?: () => void
+  onDrop?: (event: any) => void
+  onDragOver?: (event: any) => void
 }
 
-export const Placeholder: FC<PlaceholderProps> = observer(({ children, onClick }) => (
-  <Wrapper onClick={onClick}>{children}</Wrapper>
-))
+export const Placeholder: FC<PlaceholderProps> = observer(
+  ({ children, onClick, onDrop, onDragOver }) => (
+    <Wrapper onClick={onClick} onDragOver={onDragOver} onDropCapture={onDrop}>
+      {children}
+    </Wrapper>
+  )
+)
 
 Placeholder.displayName = "Placeholder"
 

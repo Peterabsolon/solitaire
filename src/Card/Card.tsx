@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, DragEvent } from "react"
 import { observer } from "mobx-react-lite"
 import styled, { css } from "styled-components"
 import { noop } from "lodash"
@@ -9,21 +9,32 @@ import { CardModel } from "./Card.model"
 
 interface CardProps {
   card: CardModel
+  index?: number
   onClick?: (card: CardModel) => void
+  onDragStart?: (event: DragEvent) => void
 }
 
-export const Card: FC<CardProps> = observer(({ card, onClick = noop }) => {
-  return (
-    <Wrapper isTurned={card.isTurned} isBlack={card.isBlack} onClick={() => onClick(card)}>
-      {card.isTurned && (
-        <>
-          {card.rank}
-          {card.suit}
-        </>
-      )}
-    </Wrapper>
-  )
-})
+export const Card: FC<CardProps> = observer(
+  ({ card, onClick = noop, onDragStart = noop, index }) => {
+    return (
+      <Wrapper
+        draggable
+        data-index={index}
+        isTurned={card.isTurned}
+        isBlack={card.isBlack}
+        onClick={onClick}
+        onDragStart={onDragStart}
+      >
+        {card.isTurned && (
+          <>
+            {card.rank}
+            {card.suit}
+          </>
+        )}
+      </Wrapper>
+    )
+  }
+)
 
 Card.displayName = "Card"
 
