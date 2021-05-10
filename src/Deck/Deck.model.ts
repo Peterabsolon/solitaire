@@ -7,8 +7,8 @@ export class DeckModel {
   // ====================================================
   // Model
   // ====================================================
-  pile = new PileModel({})
-  pileTurned = new PileModel({ isDeckPile: true })
+  pile = new PileModel()
+  pileTurned = new PileModel()
 
   constructor() {
     makeAutoObservable(this)

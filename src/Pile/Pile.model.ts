@@ -1,21 +1,11 @@
 import { action, computed, IObservableArray, observable } from "mobx"
 
 import { CardModel, RANK_VALUES } from "../Card"
-
-interface PileModelProps {
-  isDeckPile?: boolean
-}
-
 export class PileModel {
   // ====================================================
   // Model
   // ====================================================
   cards: IObservableArray<CardModel> = observable([])
-  isDeckPile: boolean
-
-  constructor({ isDeckPile = false }: PileModelProps) {
-    this.isDeckPile = isDeckPile
-  }
 
   // ====================================================
   // Computed
@@ -82,13 +72,5 @@ export class PileModel {
     if (!this.lastCard?.isTurned) {
       this.lastCard?.turn()
     }
-  }
-
-  @action handleDrop = (event: any) => {
-    console.log("dropped to pile")
-  }
-
-  @action handleDragOver = (event: any) => {
-    event.preventDefault()
   }
 }

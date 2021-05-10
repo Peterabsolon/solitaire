@@ -15,10 +15,10 @@ class AppStore {
   deck = new DeckModel()
 
   // Foundations are the 4 piles on the top-right
-  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel({}))) // prettier-ignore
+  foundations: IObservableArray<FoundationModel> = observable(times(4).map(() => new FoundationModel())) // prettier-ignore
 
   // Standard 7 piles at the bottom
-  piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel({})))
+  piles: IObservableArray<PileModel> = observable(times(7).map(() => new PileModel()))
 
   constructor() {
     makeAutoObservable(this)
