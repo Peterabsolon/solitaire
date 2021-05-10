@@ -100,6 +100,8 @@ class AppStore {
   }
 
   initialize = () => {
+    this.deck.initialize()
+
     times(7).forEach((_, pileIndex) => {
       times(pileIndex + 1).forEach((_, cardIndex) => {
         const card = this.deck.pile.pop()
@@ -114,6 +116,14 @@ class AppStore {
         }
       })
     })
+  }
+
+  reset = () => {
+    this.deck.reset()
+    this.foundations.forEach((foundation) => foundation.clear())
+    this.piles.forEach((pile) => pile.clear())
+
+    this.initialize()
   }
 }
 

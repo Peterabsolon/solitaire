@@ -17,3 +17,10 @@ body {
 h1 {
   color: #fff;
 }
+
+button {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  color: #000;
+}

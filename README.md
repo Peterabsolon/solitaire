@@ -8,3 +8,4 @@ Live demo: https://solitaire-demo-vlxp5wixua-uc.a.run.app/
 - TypeScript
 - [MobX](https://mobx.js.org/) - state management
 - [styled-components](https://github.com/styled-components/styled-components) - styling
+- HTML5 drag-n-drop API for moving cards

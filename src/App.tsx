@@ -17,15 +17,22 @@ const App = observer(() => {
     hasWon,
     initialize,
     piles,
+    reset,
   } = useStore()
 
   useEffect(initialize, [initialize])
 
   return (
     <div>
-      <h1>Solitaire</h1>
+      <Flex alignItems="center">
+        <h1>Solitaire</h1>
 
-      {hasWon && <h1 color="green">Victory!</h1>}
+        <button type="button" onClick={reset} style={{ marginLeft: 12 }}>
+          Reset
+        </button>
+      </Flex>
+
+      {hasWon && <h1>Victory!</h1>}
 
       <Flex justifyContent="space-between">
         <Deck deck={deck} />
