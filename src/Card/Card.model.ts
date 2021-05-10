@@ -39,8 +39,10 @@ export class CardModel {
   // Actions
   // ====================================================
   reveal = () => {
-    if (!this.isTurned) {
-      this.isTurned = !this.isTurned
-    }
+    this.isTurned = true
+  }
+
+  hide = () => {
+    this.isTurned = false
   }
 }
