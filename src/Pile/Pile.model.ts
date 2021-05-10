@@ -1,7 +1,7 @@
 import { action, computed, IObservableArray, observable } from "mobx"
 
 import { CardModel } from "../Card"
-import { RANK_VALUES } from "../constants"
+import { RANK, RANK_VALUES } from "../constants"
 
 export class PileModel {
   // ====================================================
@@ -58,7 +58,7 @@ export class PileModel {
 
   @action canAdd = (card: CardModel) => {
     if (!this.lastCard) {
-      return true
+      return card.rank === RANK.KING
     }
 
     const cardRank = RANK_VALUES.indexOf(card.rank)
