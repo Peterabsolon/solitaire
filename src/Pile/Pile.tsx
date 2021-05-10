@@ -10,7 +10,7 @@ import { PileModel } from "./Pile.model"
 
 interface PileProps {
   index: number
-  onCardClick?: (cards: CardModel[], pile: PileModel) => void
+  onCardClick?: (cards: CardModel, pile: PileModel) => void
   onCardDrop?: (
     isFromDeck: boolean,
     cardIndex: number,
@@ -21,14 +21,6 @@ interface PileProps {
 }
 
 export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCardDrop, pile }) => {
-  const handleWrapperClick = () => {
-    if (pile.cards.length) {
-      return
-    }
-
-    onCardClick([], pile)
-  }
-
   const handleCardDrag = (event: DragEvent) => {
     const target = event.target as HTMLDivElement
 
@@ -56,13 +48,13 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
   }
 
   return (
-    <Placeholder onClick={handleWrapperClick} onDrop={handleDrop} onDragOver={handleDragOver}>
+    <Placeholder onDrop={handleDrop} onDragOver={handleDragOver}>
       <Cards>
         {pile.cards.map((card, index) => {
           const handleCardClick = () => {
-            if (onCardClick && card.isTurned) {
-              const cards = [...pile.cards].slice(index, pile.cards.length)
-              onCardClick(cards, pile)
+            const isLast = index === pile.cards.length - 1
+            if (isLast) {
+              onCardClick(card, pile)
             }
           }
 

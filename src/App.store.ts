@@ -34,10 +34,13 @@ class AppStore {
   // ====================================================
   // Actions
   // ====================================================
-  // TODO: add test
-  handlePileCardClick = (cards: CardModel[], pile: PileModel) => {
-    console.log("TODO: automatically add to correct pile/foundation")
-    return
+  handlePileCardClick = (card: CardModel, pile: PileModel) => {
+    const validFoundation = this.foundations.find((foundation) => foundation.canAdd(card))
+    if (validFoundation) {
+      validFoundation.add(card)
+      pile.remove(card)
+      pile.revealLastCard()
+    }
   }
 
   handleDropFromDeck = (target: PileModel) => {

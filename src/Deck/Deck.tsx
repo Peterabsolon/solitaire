@@ -31,7 +31,7 @@ export const Deck: FC<DeckProps> = observer(({ deck }) => {
       {cardTurned && (
         <Card
           card={cardTurned}
-          onClick={() => handlePileCardClick([cardTurned], deck.pileTurned)}
+          onClick={() => handlePileCardClick(cardTurned, deck.pileTurned)}
           onDragStart={handleCardDrag}
         />
       )}
