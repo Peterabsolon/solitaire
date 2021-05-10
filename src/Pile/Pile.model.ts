@@ -16,7 +16,7 @@ export class PileModel {
     return this.cards.length > 0
   }
 
-  // Array length needs to be accessed in order for MobX to track it and hence update this view when it changes.
+  // Array length needs to be accessed in order for MobX to track it and hence update this computed when it changes.
   // This seems like a weird quirk, but not really once you're familiar with how MobX reactivity engine works.
   @computed get lastCard(): CardModel | undefined {
     return this.hasCards ? this.cards[this.cards.length - 1] : undefined

@@ -28,9 +28,7 @@ const App = observer(() => {
       {hasWon && <h1 color="green">Victory!</h1>}
 
       <Flex justifyContent="space-between">
-        <div>
-          <Deck deck={deck} />
-        </div>
+        <Deck deck={deck} />
 
         <Flex>
           {foundations.map((foundation, index) => (
