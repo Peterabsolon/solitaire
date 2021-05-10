@@ -43,10 +43,8 @@ export const Wrapper = styled.div<WrapperProps>`
   width: ${CARD_WIDTH};
   height: ${CARD_HEIGHT};
   display: flex;
-  margin-bottom: 24px;
-  margin-right: 24px;
-  background: #fff;
-  font-size: 24px;
+  margin-bottom: 1vw;
+  margin-right: 1vw;
 
   ${(props) => css`
     color: ${props.isBlack ? "#000" : "#f00"};

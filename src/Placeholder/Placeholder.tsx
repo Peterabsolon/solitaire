@@ -24,8 +24,8 @@ const Wrapper = styled.div`
   width: ${CARD_WIDTH};
   height: ${CARD_HEIGHT};
   border-radius: ${BORDER_RADIUS};
-  margin-right: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 1vw;
+  margin-right: 1vw;
   background: #0d680d;
   position: relative;
 `
