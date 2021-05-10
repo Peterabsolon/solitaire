@@ -11,9 +11,9 @@ const App = observer(() => {
   const {
     deck,
     foundations,
-    handlePileCardClick,
-    handleDropToPile,
     handleDropToFoundation,
+    handleDropToPile,
+    handlePileCardClick,
     hasWon,
     initialize,
     piles,

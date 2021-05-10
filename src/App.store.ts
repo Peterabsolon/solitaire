@@ -40,12 +40,11 @@ class AppStore {
     return
   }
 
-  handleDropToPileFromDeck = (pileIndexTo: number) => {
+  handleDropFromDeck = (target: PileModel) => {
     const card = this.deck.pileTurned.lastCard
-    const pile = this.piles[pileIndexTo]
 
-    if (card && pile && pile.canAdd(card)) {
-      pile.add(card)
+    if (card && target && target.canAdd(card)) {
+      target.add(card)
       this.deck.pileTurned.remove(card)
     }
   }
@@ -56,34 +55,24 @@ class AppStore {
     pileIndexFrom: number,
     pileIndexTo: number
   ) => {
+    const pile = this.piles[pileIndexTo]
+
     if (fromDeck) {
-      this.handleDropToPileFromDeck(pileIndexTo)
+      this.handleDropFromDeck(pile)
       return
     }
 
-    const pileSource = this.piles[pileIndexFrom]
-    const pileTarget = this.piles[pileIndexTo]
-
-    const sourceCards = pileSource.cards
+    const sourcePile = this.piles[pileIndexFrom]
+    const sourceCards = sourcePile.cards
     const cards = sourceCards.slice(cardIndex, sourceCards.length)
 
-    if (cards.length && pileTarget && pileTarget.canAdd(cards[0])) {
+    if (cards.length && pile && pile.canAdd(cards[0])) {
       cards.forEach((card) => {
-        pileTarget.add(card)
-        pileSource.remove(card)
+        pile.add(card)
+        sourcePile.remove(card)
       })
 
-      pileSource.turnLastCard()
-    }
-  }
-
-  handleDropToFoundationFromDeck = (foundationIndex: number) => {
-    const card = this.deck.pileTurned.lastCard
-    const foundation = this.foundations[foundationIndex]
-
-    if (card && foundation && foundation.canAdd(card)) {
-      foundation.add(card)
-      this.deck.pileTurned.remove(card)
+      sourcePile.turnLastCard()
     }
   }
 
@@ -93,14 +82,14 @@ class AppStore {
     pileIndex: number,
     foundationIndex: number
   ) => {
+    const foundation = this.foundations[foundationIndex]
+
     if (fromDeck) {
-      this.handleDropToFoundationFromDeck(foundationIndex)
+      this.handleDropFromDeck(foundation)
       return
     }
 
     const pile = this.piles[pileIndex]
-    const foundation = this.foundations[foundationIndex]
-
     const card = pile.cards[cardIndex]
 
     if (card && foundation && foundation.canAdd(card)) {
