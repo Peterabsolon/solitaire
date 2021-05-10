@@ -12,14 +12,15 @@ interface CardProps {
   index?: number
   onClick?: (card: CardModel) => void
   onDragStart?: (event: DragEvent) => void
+  isTurned?: boolean
 }
 
 export const Card: FC<CardProps> = observer(
-  ({ card, onClick = noop, onDragStart = noop, index }) => (
+  ({ card, onClick = noop, onDragStart = noop, index, isTurned }) => (
     <Wrapper
       draggable
       data-index={index}
-      isTurned={card.isTurned}
+      isTurned={Boolean(card.isTurned || isTurned)}
       isBlack={card.isBlack}
       onClick={onClick}
       onDragStart={onDragStart}
