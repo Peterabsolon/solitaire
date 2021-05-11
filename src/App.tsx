@@ -69,7 +69,7 @@ const App = observer(() => {
        */}
       <HiddenCards>
         {deck.pile.cards.map((card) => (
-          <Card card={card} isTurned />
+          <Card key={card.key} card={card} isTurned />
         ))}
       </HiddenCards>
     </div>
