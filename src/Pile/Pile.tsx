@@ -38,8 +38,9 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
 
     const cardIndex = event.dataTransfer.getData("cardIndex")
     const pileIndexFrom = event.dataTransfer.getData("pileIndex")
+    const isFromDeck = event.dataTransfer.getData("isFromDeck")
 
-    onCardDrop(false, Number(cardIndex), Number(pileIndexFrom), index)
+    onCardDrop(Boolean(isFromDeck), Number(cardIndex), Number(pileIndexFrom), index)
   }
 
   const handleDragOver = (event: DragEvent) => {

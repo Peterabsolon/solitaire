@@ -91,9 +91,11 @@ describe("drag-n-drop", () => {
   describe("drop on Pile", () => {
     it("reads broadcasted data and calls onCardDrop", () => {
       const onCardDrop = jest.fn()
+
       const cardIndex = "12"
       const pileIndexFrom = "3"
       const pileIndexTo = 1
+      const isFromDeck = "true"
 
       render(<Pile index={pileIndexTo} pile={pile} onCardDrop={onCardDrop} />)
 
@@ -102,11 +104,12 @@ describe("drag-n-drop", () => {
 
       event.dataTransfer.setData("cardIndex", cardIndex)
       event.dataTransfer.setData("pileIndex", pileIndexFrom)
+      event.dataTransfer.setData("isFromDeck", isFromDeck)
 
       fireEvent(placeholder, event)
 
       expect(onCardDrop).toBeCalledWith(
-        false,
+        Boolean(isFromDeck),
         Number(cardIndex),
         Number(pileIndexFrom),
         pileIndexTo
