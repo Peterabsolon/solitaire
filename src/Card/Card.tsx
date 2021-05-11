@@ -20,6 +20,7 @@ export const Card: FC<CardProps> = observer(
     <Wrapper
       draggable
       data-index={index}
+      data-testid={`${card.rank}-${card.suit}`}
       isTurned={Boolean(card.isTurned || isTurned)}
       isBlack={card.isBlack}
       onClick={onClick}

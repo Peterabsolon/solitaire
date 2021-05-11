@@ -31,16 +31,15 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
     event.dataTransfer.setData("pileIndex", pileIndex)
   }
 
-  const handleDrop = (event: DragEvent) => {
+  const handleCardDrop = (event: DragEvent) => {
     if (!onCardDrop) {
       return
     }
 
     const cardIndex = event.dataTransfer.getData("cardIndex")
     const pileIndexFrom = event.dataTransfer.getData("pileIndex")
-    const isFromDeck = event.dataTransfer.getData("isFromDeck")
 
-    onCardDrop(Boolean(isFromDeck), Number(cardIndex), Number(pileIndexFrom), index)
+    onCardDrop(false, Number(cardIndex), Number(pileIndexFrom), index)
   }
 
   const handleDragOver = (event: DragEvent) => {
@@ -48,7 +47,7 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
   }
 
   return (
-    <StyledPlaceholder onDrop={handleDrop} onDragOver={handleDragOver}>
+    <StyledPlaceholder onDrop={handleCardDrop} onDragOver={handleDragOver}>
       <Cards>
         {pile.cards.map((card, index) => {
           const handleCardClick = () => {

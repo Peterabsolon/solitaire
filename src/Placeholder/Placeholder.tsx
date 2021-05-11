@@ -13,7 +13,13 @@ interface PlaceholderProps {
 
 export const Placeholder: FC<PlaceholderProps> = observer(
   ({ children, className, onClick, onDrop, onDragOver }) => (
-    <Wrapper className={className} onClick={onClick} onDragOver={onDragOver} onDropCapture={onDrop}>
+    <Wrapper
+      className={className}
+      data-testid="Placeholder"
+      onClick={onClick}
+      onDragOver={onDragOver}
+      onDropCapture={onDrop}
+    >
       {children}
     </Wrapper>
   )
