@@ -22,8 +22,8 @@ export class DeckModel {
     for (const rank of Object.values(RANK)) {
       for (const suit of Object.values(SUIT)) {
         const card = new CardModel({
-          rank: rank as RANK,
-          suit: suit as SUIT,
+          rank,
+          suit,
           isTurned: false,
         })
 
