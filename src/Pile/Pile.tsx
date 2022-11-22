@@ -11,12 +11,7 @@ import { PileModel } from "./Pile.model"
 interface PileProps {
   index: number
   onCardClick?: (cards: CardModel, pile: PileModel) => void
-  onCardDrop?: (
-    isFromDeck: boolean,
-    cardIndex: number,
-    pileIndexFrom: number,
-    pileIndexTo: number
-  ) => void
+  onCardDrop?: (isFromDeck: boolean, cardIndex: number, pileIndexFrom: number, pileIndexTo: number) => void
   pile: PileModel
 }
 

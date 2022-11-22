@@ -19,9 +19,7 @@ export const Deck: FC<DeckProps> = observer(({ deck }) => {
 
   return (
     <Flex>
-      <Placeholder onClick={deck.turnCard}>
-        {cardUnturned && <Card card={cardUnturned} />}
-      </Placeholder>
+      <Placeholder onClick={deck.turnCard}>{cardUnturned && <Card card={cardUnturned} />}</Placeholder>
 
       {cardTurned && (
         <Card

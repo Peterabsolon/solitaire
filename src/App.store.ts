@@ -7,6 +7,9 @@ import { DeckModel } from "./Deck"
 import { FoundationModel } from "./Foundation"
 import { PileModel } from "./Pile"
 
+const PILES_COUNT = 7
+const FOUNDATIONS_COUNT = 4
+
 class AppStore {
   // ====================================================
   // Model
@@ -15,10 +18,10 @@ class AppStore {
   deck = new DeckModel()
 
   // Foundations are the 4 piles on the top-right
-  foundations = observable<FoundationModel>(times(4).map(() => new FoundationModel()))
+  foundations = observable<FoundationModel>(times(FOUNDATIONS_COUNT).map(() => new FoundationModel()))
 
   // Standard 7 piles at the bottom
-  piles = observable<PileModel>(times(7).map(() => new PileModel()))
+  piles = observable<PileModel>(times(PILES_COUNT).map(() => new PileModel()))
 
   constructor() {
     makeAutoObservable(this)
@@ -32,7 +35,36 @@ class AppStore {
   }
 
   // ====================================================
-  // Actions
+  // Public
+  // ====================================================
+  initialize = () => {
+    this.deck.initialize()
+
+    times(PILES_COUNT).forEach((_, pileIndex) => {
+      times(pileIndex + 1).forEach((_, cardIndex) => {
+        const card = this.deck.pile.pop()
+        const isLast = cardIndex === pileIndex
+
+        if (card) {
+          if (isLast) {
+            card.reveal()
+          }
+
+          this.piles[pileIndex].add(card)
+        }
+      })
+    })
+  }
+
+  reset = () => {
+    this.deck.reset()
+    this.foundations.forEach((foundation) => foundation.clear())
+    this.piles.forEach((pile) => pile.clear())
+    this.initialize()
+  }
+
+  // ====================================================
+  // UI event handlers
   // ====================================================
   handlePileCardClick = (card: CardModel, pile: PileModel) => {
     const validFoundation = this.foundations.find((foundation) => foundation.canAdd(card))
@@ -56,12 +88,7 @@ class AppStore {
     }
   }
 
-  handleDropToPile = (
-    fromDeck: boolean,
-    cardIndex: number,
-    pileIndexFrom: number,
-    pileIndexTo: number
-  ) => {
+  handleDropToPile = (fromDeck: boolean, cardIndex: number, pileIndexFrom: number, pileIndexTo: number) => {
     const pile = this.piles[pileIndexTo]
 
     if (fromDeck) {
@@ -83,12 +110,7 @@ class AppStore {
     }
   }
 
-  handleDropToFoundation = (
-    fromDeck: boolean,
-    cardIndex: number,
-    pileIndex: number,
-    foundationIndex: number
-  ) => {
+  handleDropToFoundation = (fromDeck: boolean, cardIndex: number, pileIndex: number, foundationIndex: number) => {
     const foundation = this.foundations[foundationIndex]
 
     if (fromDeck) {
@@ -104,33 +126,6 @@ class AppStore {
       pile.remove(card)
       pile.revealLastCard()
     }
-  }
-
-  initialize = () => {
-    this.deck.initialize()
-
-    times(7).forEach((_, pileIndex) => {
-      times(pileIndex + 1).forEach((_, cardIndex) => {
-        const card = this.deck.pile.pop()
-        const isLast = cardIndex === pileIndex
-
-        if (card) {
-          if (isLast) {
-            card.reveal()
-          }
-
-          this.piles[pileIndex].add(card)
-        }
-      })
-    })
-  }
-
-  reset = () => {
-    this.deck.reset()
-    this.foundations.forEach((foundation) => foundation.clear())
-    this.piles.forEach((pile) => pile.clear())
-
-    this.initialize()
   }
 }
 

@@ -108,12 +108,7 @@ describe("drag-n-drop", () => {
 
       fireEvent(placeholder, event)
 
-      expect(onCardDrop).toBeCalledWith(
-        Boolean(isFromDeck),
-        Number(cardIndex),
-        Number(pileIndexFrom),
-        pileIndexTo
-      )
+      expect(onCardDrop).toBeCalledWith(Boolean(isFromDeck), Number(cardIndex), Number(pileIndexFrom), pileIndexTo)
     })
   })
 })

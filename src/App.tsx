@@ -41,25 +41,14 @@ const App = observer(() => {
 
         <Flex>
           {foundations.map((foundation, index) => (
-            <Foundation
-              key={index}
-              index={index}
-              foundation={foundation}
-              onCardDrop={handleDropToFoundation}
-            />
+            <Foundation key={index} index={index} foundation={foundation} onCardDrop={handleDropToFoundation} />
           ))}
         </Flex>
       </Flex>
 
       <Flex>
         {piles.map((pile, index) => (
-          <Pile
-            key={index}
-            index={index}
-            pile={pile}
-            onCardClick={handlePileCardClick}
-            onCardDrop={handleDropToPile}
-          />
+          <Pile key={index} index={index} pile={pile} onCardClick={handlePileCardClick} onCardDrop={handleDropToPile} />
         ))}
       </Flex>
 

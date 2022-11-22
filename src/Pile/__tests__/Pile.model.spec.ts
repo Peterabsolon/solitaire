@@ -15,9 +15,7 @@ describe("canAdd", () => {
       const invalidRanks = RANK_VALUES.slice(0, RANK_VALUES.length - 1) // all except last - King
       const cardKing = new CardModel({ rank: RANK.KING, suit: SUIT.CLUBS })
 
-      invalidRanks.forEach((rank) =>
-        expect(pile.canAdd(new CardModel({ rank, suit: SUIT.CLUBS }))).toBe(false)
-      )
+      invalidRanks.forEach((rank) => expect(pile.canAdd(new CardModel({ rank, suit: SUIT.CLUBS }))).toBe(false))
 
       expect(pile.canAdd(cardKing)).toBe(true)
     })
@@ -46,9 +44,7 @@ describe("canAdd", () => {
 
       pile.add(cardKingBlack)
 
-      invalidRanks.forEach((rank) =>
-        expect(pile.canAdd(new CardModel({ rank, suit: SUIT.CLUBS }))).toBe(false)
-      )
+      invalidRanks.forEach((rank) => expect(pile.canAdd(new CardModel({ rank, suit: SUIT.CLUBS }))).toBe(false))
 
       expect(pile.canAdd(cardQueenRed)).toBe(true)
     })
