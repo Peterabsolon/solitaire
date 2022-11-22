@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { DragEvent, FC } from "react"
 import { observer } from "mobx-react-lite"
 import styled from "styled-components"
 
@@ -7,8 +7,8 @@ import { BORDER_RADIUS, CARD_HEIGHT, CARD_WIDTH } from "../constants"
 interface PlaceholderProps {
   className?: string
   onClick?: () => void
-  onDrop?: (event: any) => void
-  onDragOver?: (event: any) => void
+  onDrop?: (event: DragEvent) => void
+  onDragOver?: (event: DragEvent) => void
 }
 
 export const Placeholder: FC<PlaceholderProps> = observer(

@@ -1,7 +1,9 @@
 import { action, computed, observable } from "mobx"
+import { DragEvent } from "react"
 
 import { CardModel } from "../Card"
 import { RANK, RANK_VALUES } from "../constants"
+import { TOnCardDropFn } from "../App.types"
 
 export class PileModel {
   // ====================================================
@@ -27,7 +29,7 @@ export class PileModel {
   }
 
   // ====================================================
-  // Actions
+  // Public
   // ====================================================
   @action add = (card: CardModel): void => {
     this.cards.push(card)
@@ -72,5 +74,30 @@ export class PileModel {
 
   @action revealLastCard = () => {
     this.lastCard?.reveal()
+  }
+
+  // ====================================================
+  // UI event handlers
+  // ====================================================
+  @action handleCardDrag = (event: DragEvent, index: number) => {
+    const target = event.target as HTMLDivElement
+
+    const cardIndex = target.getAttribute("data-index")
+    const pileIndex = index.toString()
+
+    event.dataTransfer.setData("cardIndex", cardIndex!)
+    event.dataTransfer.setData("pileIndex", pileIndex)
+  }
+
+  @action handleCardDrop = (event: DragEvent, index: number, onCardDrop?: TOnCardDropFn) => {
+    if (!onCardDrop) {
+      return
+    }
+
+    const cardIndex = event.dataTransfer.getData("cardIndex")
+    const pileIndexFrom = event.dataTransfer.getData("pileIndex")
+    const isFromDeck = event.dataTransfer.getData("isFromDeck")
+
+    onCardDrop(Boolean(isFromDeck), Number(cardIndex), Number(pileIndexFrom), index)
   }
 }
