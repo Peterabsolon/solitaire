@@ -1,4 +1,4 @@
-import { FC, DragEvent } from "react"
+import { FC } from "react"
 import { observer } from "mobx-react-lite"
 import { Flex } from "rebass"
 
@@ -13,14 +13,9 @@ interface DeckProps {
 }
 
 export const Deck: FC<DeckProps> = observer(({ deck }) => {
-  const { handlePileCardClick } = useStore()
+  const { handlePileCardClick, handlePileCardDrag } = useStore()
 
-  const cardUnturned = deck.pile.lastCard
-  const cardTurned = deck.pileTurned.lastCard
-
-  const handleCardDrag = (event: DragEvent) => {
-    event.dataTransfer.setData("isFromDeck", "true")
-  }
+  const { cardUnturned, cardTurned } = deck
 
   return (
     <Flex>
@@ -32,7 +27,7 @@ export const Deck: FC<DeckProps> = observer(({ deck }) => {
         <Card
           card={cardTurned}
           onClick={() => handlePileCardClick(cardTurned, deck.pileTurned)}
-          onDragStart={handleCardDrag}
+          onDragStart={handlePileCardDrag}
         />
       )}
     </Flex>

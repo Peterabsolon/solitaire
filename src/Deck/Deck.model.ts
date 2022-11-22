@@ -16,6 +16,17 @@ export class DeckModel {
   }
 
   // ====================================================
+  // Computed
+  // ====================================================
+  get cardUnturned() {
+    return this.pile.lastCard
+  }
+
+  get cardTurned() {
+    return this.pileTurned.lastCard
+  }
+
+  // ====================================================
   // Actions
   // ====================================================
   createCards() {

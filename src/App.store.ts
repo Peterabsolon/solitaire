@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react"
+import { createContext, useContext, DragEvent } from "react"
 import { makeAutoObservable, observable } from "mobx"
 import { times } from "lodash"
 
@@ -41,6 +41,10 @@ class AppStore {
       pile.remove(card)
       pile.revealLastCard()
     }
+  }
+
+  handlePileCardDrag = (event: DragEvent) => {
+    event.dataTransfer.setData("isFromDeck", "true")
   }
 
   handleDropFromDeck = (target: PileModel) => {
