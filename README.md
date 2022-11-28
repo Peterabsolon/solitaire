@@ -1,5 +1,7 @@
 # Solitaire
 
+React, MobX and TypeScript clone of well known card game
+
 ## Run
 
 ```bash
