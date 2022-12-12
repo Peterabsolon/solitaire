@@ -1,6 +1,6 @@
 # Solitaire
 
-React, MobX and TypeScript clone of well known card game
+Solitare clone written in React, MobX and TypeScript, just for fun
 
 ## Run
 

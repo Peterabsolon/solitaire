@@ -1,5 +1,7 @@
 {
   "name": "solitaire",
+  "description": "Solitare clone written in React, MobX and TypeScript, just for fun",
+  "author": "Peter Absolon <peterabsolon@yahoo.com>",
   "version": "1.0.0",
   "private": true,
   "scripts": {
