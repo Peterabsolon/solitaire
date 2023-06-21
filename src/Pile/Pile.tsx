@@ -21,9 +21,9 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
     onDragOver={(e) => e.preventDefault()}
   >
     <Cards>
-      {pile.cards.map((card, index) => {
+      {pile.cards.map((card, cardIndex) => {
         const handleCardClick = () => {
-          const isLast = index === pile.cards.length - 1
+          const isLast = cardIndex === pile.cards.length - 1
           if (isLast) {
             onCardClick(card, pile)
           }
@@ -32,7 +32,7 @@ export const Pile: FC<PileProps> = observer(({ index, onCardClick = noop, onCard
         return (
           <Card
             key={card.key}
-            index={index}
+            index={cardIndex}
             card={card}
             onClick={handleCardClick}
             onDragStart={(event) => pile.handleCardDrag(event, index)}
